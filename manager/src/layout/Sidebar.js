@@ -2,10 +2,22 @@ import React, { useState } from 'react'
 import { Box, Link, Typography } from '@mui/material'
 import logo from '../assets/images/logo.png'
 import DashboardIcon from '@mui/icons-material/Dashboard'
+import GroupIcon from '@mui/icons-material/Group';
+import AutoModeIcon from '@mui/icons-material/AutoMode';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 const Sidebar = () => {
   const [sidebarActive, setSidebarActive] = useState('employees')
   console.log(' sidebarActive:', sidebarActive)
+
+  const sidebarList = [
+    {id:'dashboard', title: 'Dashboard', icon: DashboardIcon },
+    {id:'employees', title: 'All Employees', icon: GroupIcon },
+    {id:'departments', title: 'All Departments', icon: AutoModeIcon },
+    {id:'attendance', title: 'Attendance', icon: EventAvailableIcon },
+    {id:'settings', title: 'Settings', icon: SettingsIcon },
+  ]
 
   return (
     <Box sx={{ padding: '20px' }}>
@@ -22,7 +34,7 @@ const Sidebar = () => {
       >
         <Box sx={{ padding: '30px' }}>
           {/* logo */}
-          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingBottom: '30px' }}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingBottom: '30px', gap: '10px' }}>
             <Box
               sx={{
                 display: 'flex',
@@ -37,30 +49,24 @@ const Sidebar = () => {
             >
               <img src={logo} alt="logo" />
             </Box>
-            <Typography variant="h5" sx={{ color: 'white' }}>
+            <Typography variant="h5">
               HRMS
             </Typography>
           </Box>
 
           {/* navbar */}
           <Box>
-            <NavItem
-              title="Dashboard"
-              icon={DashboardIcon}
-              active={sidebarActive === 'dashboard'}
-              onClick={() => {
-                setSidebarActive('dashboard')
-              }}
-            />
-
-            <NavItem
-              title="All Employees"
-              icon={DashboardIcon}
-              active={sidebarActive === 'employees'}
-              onClick={() => {
-                setSidebarActive('employees')
-              }}
-            />
+            {sidebarList.map((item, index) => (
+              <NavItem
+                key={index}
+                title={item.title}
+                icon={item.icon}
+                active={sidebarActive === item.id}
+                onClick={() => {
+                  setSidebarActive(item.id)
+                }}
+              />
+            ))}
           </Box>
         </Box>
       </Box>
@@ -84,8 +90,8 @@ const NavItem = ({ title, icon, active, onClick }) => {
       }}
       onClick={onClick}
     >
-      <NavIcon sx={{ color: active ? '#7152F3' : 'white' }} />
-      <Link href="#" sx={{ color: active ? '#7152F3' : 'white', textDecoration: 'none', fontWeight: '500' }}>
+      <NavIcon sx={{ color: active ? '#7152F3' : 'black' }} />
+      <Link href="#" sx={{ color: active ? '#7152F3' : 'black', textDecoration: 'none', fontWeight: '500' }}>
         {title}
       </Link>
     </Box>
