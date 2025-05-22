@@ -1,11 +1,9 @@
+import { Box } from '@mui/material'
 import React from 'react'
+import Router from '../routes/Routes'
 
 const Content = () => {
-  return (
-    <div style={{color: 'white'}}>
-      Content
-    </div>
-  )
+  return <Router />
 }
 
 export default Content

@@ -1,8 +1,8 @@
 import React from 'react'
-import Sidebar from './Sidebar';
-import Content from './Content';
-import { Box } from '@mui/material';
-import Header from './Header';
+import Sidebar from './Sidebar'
+import Content from './Content'
+import { Box } from '@mui/material'
+import Header from './Header'
 
 const MainLayout = () => {
   return (
@@ -16,4 +16,4 @@ const MainLayout = () => {
   )
 }
 
-export default MainLayout;
+export default MainLayout

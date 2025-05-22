@@ -1,22 +1,24 @@
-import React, { useState } from 'react'
+import React, { use, useState } from 'react'
 import { Box, Link, Typography } from '@mui/material'
 import logo from '../assets/images/logo.png'
 import DashboardIcon from '@mui/icons-material/Dashboard'
-import GroupIcon from '@mui/icons-material/Group';
-import AutoModeIcon from '@mui/icons-material/AutoMode';
-import EventAvailableIcon from '@mui/icons-material/EventAvailable';
-import SettingsIcon from '@mui/icons-material/Settings';
+import GroupIcon from '@mui/icons-material/Group'
+import AutoModeIcon from '@mui/icons-material/AutoMode'
+import EventAvailableIcon from '@mui/icons-material/EventAvailable'
+import SettingsIcon from '@mui/icons-material/Settings'
+import { NavLink, useLocation } from 'react-router-dom'
 
 const Sidebar = () => {
-  const [sidebarActive, setSidebarActive] = useState('employees')
-  console.log(' sidebarActive:', sidebarActive)
+  const [sidebarActive, setSidebarActive] = useState('dashboard')
+  const location = useLocation()
+  console.log(' location:', location.pathname.startsWith('/dashboard'))
 
   const sidebarList = [
-    {id:'dashboard', title: 'Dashboard', icon: DashboardIcon },
-    {id:'employees', title: 'All Employees', icon: GroupIcon },
-    {id:'departments', title: 'All Departments', icon: AutoModeIcon },
-    {id:'attendance', title: 'Attendance', icon: EventAvailableIcon },
-    {id:'settings', title: 'Settings', icon: SettingsIcon },
+    { id: 'dashboard', title: 'Dashboard', icon: DashboardIcon },
+    { id: 'employees', title: 'All Employees', icon: GroupIcon },
+    { id: 'departments', title: 'All Departments', icon: AutoModeIcon },
+    { id: 'attendance', title: 'Attendance', icon: EventAvailableIcon },
+    { id: 'settings', title: 'Settings', icon: SettingsIcon },
   ]
 
   return (
@@ -34,7 +36,9 @@ const Sidebar = () => {
       >
         <Box sx={{ padding: '30px' }}>
           {/* logo */}
-          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingBottom: '30px', gap: '10px' }}>
+          <Box
+            sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingBottom: '30px', gap: '10px' }}
+          >
             <Box
               sx={{
                 display: 'flex',
@@ -49,9 +53,7 @@ const Sidebar = () => {
             >
               <img src={logo} alt="logo" />
             </Box>
-            <Typography variant="h5">
-              HRMS
-            </Typography>
+            <Typography variant="h5">HRMS</Typography>
           </Box>
 
           {/* navbar */}
@@ -59,12 +61,10 @@ const Sidebar = () => {
             {sidebarList.map((item, index) => (
               <NavItem
                 key={index}
+                id={item.id}
                 title={item.title}
                 icon={item.icon}
-                active={sidebarActive === item.id}
-                onClick={() => {
-                  setSidebarActive(item.id)
-                }}
+                active={location.pathname.startsWith(`/${item.id}`)}
               />
             ))}
           </Box>
@@ -74,12 +74,13 @@ const Sidebar = () => {
   )
 }
 
-const NavItem = ({ title, icon, active, onClick }) => {
+const NavItem = ({ title, icon, active, id }) => {
   const NavIcon = icon
 
   return (
-    <Box
-      sx={{
+    <NavLink
+      to={id}
+      style={{
         display: 'flex',
         gap: '10px',
         padding: '10px',
@@ -87,14 +88,12 @@ const NavItem = ({ title, icon, active, onClick }) => {
         cursor: 'pointer',
         background: active ? 'rgba(83, 83, 83, 0.3)' : 'transparent',
         borderRadius: '0 8px 8px 0',
+        textDecoration: 'none',
       }}
-      onClick={onClick}
     >
       <NavIcon sx={{ color: active ? '#7152F3' : 'black' }} />
-      <Link href="#" sx={{ color: active ? '#7152F3' : 'black', textDecoration: 'none', fontWeight: '500' }}>
-        {title}
-      </Link>
-    </Box>
+      <Box sx={{ color: active ? '#7152F3' : 'black', fontWeight: '500' }}>{title}</Box>
+    </NavLink>
   )
 }
 
