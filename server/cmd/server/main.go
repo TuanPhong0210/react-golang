@@ -31,7 +31,6 @@ func main() {
 	// =========================================
 	log.Println("📝 Loading configuration...")
 	cfg := config.LoadConfig()
-
 	// =========================================
 	// Step 2: Connect to Database
 	// =========================================
@@ -40,6 +39,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("❌ Failed to connect to database: %v", err)
 	}
+	
 
 	// Lấy underlying sql.DB để đóng connection khi cần
 	sqlDB, err := db.DB()

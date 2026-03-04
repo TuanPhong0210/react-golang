@@ -20,9 +20,8 @@ export function Login() {
 
     try {
       const result = await login(email, password);
-      console.log("🚀 ~ result:", result);
-      // saveAuth(result.token, result.user);
-      // navigate("/dashboard");
+      saveAuth(result.token, result.user);
+      navigate("/dashboard");
     } catch (err) {
       setError("Email hoặc mật khẩu không đúng");
     } finally {
